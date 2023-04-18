@@ -4,25 +4,22 @@ package org.example.arrayoperations;
 public class RemoverArrayDuplicates {
 
     public int[] removeDuplicates(int[] array) {
-        int[] tmpArray = new int[array.length];
-        int j = 0;
-        for (int i = 0; i < array.length; ++i) {
-            if (notFindElementArray(tmpArray, array[i])) {
-                tmpArray[j++] = array[i];
-            }
-        }
-        int[] finishedArray = new int[j];
-        System.arraycopy(tmpArray, 0, finishedArray, 0, j);
-        return finishedArray;
-    }
+        int lastFinishedIndex = array.length - 1;
+        int tmpElement;
 
-    private boolean notFindElementArray(int[] array, int element) {
-        for (int i = 0; i < array.length; ++i) {
-            if (array[i] == element) {
-                return false;
+        for (int i = 0; i < lastFinishedIndex; ++i) {
+            for (int j = i + 1; j < lastFinishedIndex + 1; ++j) {
+                if (array[i] == array[j]) {
+                    tmpElement = array[j];
+                    array[j] = array[lastFinishedIndex];
+                    array[lastFinishedIndex--] = tmpElement;
+                }
             }
         }
-        return true;
+
+        int[] finishedArray = new int[lastFinishedIndex + 1];
+        System.arraycopy(array, 0, finishedArray, 0, lastFinishedIndex + 1);
+        return finishedArray;
     }
 
 }
